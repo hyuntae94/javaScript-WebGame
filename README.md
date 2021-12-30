@@ -15,6 +15,7 @@
 - 함수(또는 메소드)가 한 가지 일만 잘 하도록 구현
 - `기능단위`로 커밋하는 방식
 
+
 **참고** [우아한테크코스](https://github.com/woowacourse/javascript-racingcar-precourse#%EA%B3%B5%ED%86%B5-%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD)
 
 
