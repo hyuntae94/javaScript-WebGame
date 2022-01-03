@@ -16,6 +16,9 @@ const onClickBtn = () => {
         } 
         else
             $order.textContent = order+1;
+        //입력창을 비우고 커서를 둔다.
+        $input.value = '';
+        $input.focus();
     }
     else{//제시어가 존재한다.
         if (word[word.length -1] === newWord[0]){//단어가 이어진 경우
@@ -29,7 +32,11 @@ const onClickBtn = () => {
                 $order.textContent = order+1;
         }
         else{//두 단어가 이어지지 않는 경우
+            alert('올바르지 않는 단어입니다!')
             
+            //입력창을 비우고 커서를 둔다.
+            $input.value = '';
+            $input.focus();
         }
     }
 }
