@@ -22,3 +22,37 @@
 (N)
     alert
 ```
+
+## 🔎 Issue ##
+
+### 1)프로그램 실행시 함수작동
+```js
+const onClickNumber = (number) => {
+    if (!operator){
+        numOne += number;
+    }
+    else{
+        numTwo += number;
+    }
+    $result.value += number;
+}
+
+document.querySelector('#num-0').addEventListener('click', onClickNumber('0'));
+
+//문제 원인
+-프로그램 작동 시 onClickNumber함수가 실행되어 계산기에 0이 나타나는 문제
+
+const onClickNumber = (number) => {
+    return () => {
+        if (!operator){
+            numOne += number;
+        }
+        else{
+            numTwo += number;
+        }
+        $result.value += number;
+    }
+}
+//문제해결
+return () => {} 사용하여 실행 대기상태인 함수로 만들어 해결해 줌.
+```
