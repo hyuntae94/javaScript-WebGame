@@ -11,7 +11,7 @@
 
 <img src="../images/word_play_alert.gif">
 
-## 🚦구현순서
+## 🚦순서도
 ```js
 1. 몇 명이 참가할것인지
 2. 제시어 생성

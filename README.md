@@ -1,4 +1,4 @@
-<h1 align='middle'> Make Game using Javascript
+<h1 align='middle'> Make Web-Game using Javascript
 </h1>
 
 ## 🎯 공통 사항
