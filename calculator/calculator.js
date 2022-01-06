@@ -45,7 +45,29 @@ document.querySelector('#num-9').addEventListener('click', onClickNumber);
 document.querySelector('#plus').addEventListener('click',onClickOperator('+'));
 document.querySelector('#minus').addEventListener('click',onClickOperator('-'));
 document.querySelector('#divide').addEventListener('click', onClickOperator('/'));
-document.querySelector('#multiply').addEventListener('click', onClickOperator('x'));
+document.querySelector('#multiply').addEventListener('click', onClickOperator('*'));
 //나머지
-document.querySelector('#clear').addEventListener();
-document.querySelector('#calculate').addEventListener();
+// document.querySelector('#clear').addEventListener();
+document.querySelector('#calculate').addEventListener('click',()=>{
+    if (numTwo){
+        switch(operator){
+            case '+':
+                $result.value = parseInt(numOne) + parseInt(numTwo);
+                break;
+            case '-':
+                $result.value = numOne - numTwo;
+                break;
+            case '*':
+                $result.value = numOne * numTwo;
+                break;
+            case '/':
+                $result.value = numOne / numTwo;
+                break;
+            default:
+                break;
+        }
+    }
+    else{
+        alert('숫자를 입력하세요!');
+    }
+});
