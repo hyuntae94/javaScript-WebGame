@@ -47,7 +47,14 @@ document.querySelector('#minus').addEventListener('click',onClickOperator('-'));
 document.querySelector('#divide').addEventListener('click', onClickOperator('/'));
 document.querySelector('#multiply').addEventListener('click', onClickOperator('*'));
 //나머지
-// document.querySelector('#clear').addEventListener();
+document.querySelector('#clear').addEventListener('click', () => {
+    numOne = "";
+    numTwo = "";
+    operator ="";
+    $operator.value = "";
+    $result.value = "";
+
+});
 document.querySelector('#calculate').addEventListener('click',()=>{
     if (numTwo){
         switch(operator){
