@@ -1,5 +1,15 @@
 <h1 align='middle'>계산기</h1>
 
+## 👨🏻‍💻프로그램 실행결과 ##
+
+### 1) 계산실행
+
+<img src='../images/calculator_play.gif' alt='계산기실행'>
+
+### 2) 에러
+
+<img src='../images/calculator_error.gif' alt='계산기실행'>
+
 ## 🚦순서도
 ```js
 1. 숫자1,숫자2,연산자 변수 생성
