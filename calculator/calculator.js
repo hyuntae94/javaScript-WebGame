@@ -20,20 +20,12 @@ const onClickNumber = (event) => {
 }
 
 const onClickOperator = (op) => () => {
-    if ($operator.value){
-        numOne = $result.value;
-        numTwo = "";
+    if (numOne){
         operator = op;
         $operator.value = op;
-    }
+    } 
     else{
-        if (numOne){
-            operator = op;
-            $operator.value = op;
-        } 
-        else{
-            alert('숫자를 먼저 입력하세요!');
-        }
+        alert('숫자를 먼저 입력하세요!');
     }
 }
 
@@ -67,11 +59,9 @@ document.querySelector('#calculate').addEventListener('click',()=>{
         switch(operator){
             case '+':
                 $result.value = parseInt(numOne) + parseInt(numTwo);
-                console.log(typeof $result.value);
                 break;
             case '-':
                 $result.value = numOne - numTwo;
-                console.log(typeof $result.value);
                 break;
             case '*':
                 $result.value = numOne * numTwo;
@@ -82,6 +72,10 @@ document.querySelector('#calculate').addEventListener('click',()=>{
             default:
                 break;
         }
+        numOne = $result.value;
+        numTwo = "";
+        operator = "";
+        $operator.value = "";
     }
     else{
         alert('숫자를 입력하세요!');
