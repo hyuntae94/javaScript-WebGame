@@ -20,14 +20,21 @@ const onClickNumber = (event) => {
 }
 
 const onClickOperator = (op) => () => {
-    if (numOne){
+    if ($operator.value){
+        numOne = $result.value;
+        numTwo = "";
         operator = op;
-        $operator.value += op;
-    } 
-    else{
-        alert('숫자를 먼저 입력하세요!');
+        $operator.value = op;
     }
-    
+    else{
+        if (numOne){
+            operator = op;
+            $operator.value = op;
+        } 
+        else{
+            alert('숫자를 먼저 입력하세요!');
+        }
+    }
 }
 
 //숫자(0~9)
@@ -60,9 +67,11 @@ document.querySelector('#calculate').addEventListener('click',()=>{
         switch(operator){
             case '+':
                 $result.value = parseInt(numOne) + parseInt(numTwo);
+                console.log(typeof $result.value);
                 break;
             case '-':
                 $result.value = numOne - numTwo;
+                console.log(typeof $result.value);
                 break;
             case '*':
                 $result.value = numOne * numTwo;
