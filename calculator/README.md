@@ -32,32 +32,32 @@
 
 ### 1)프로그램 실행시 함수작동
 ```js
-const onClickNumber = (number) => {
-    if (!operator){
-        numOne += number;
-    }
+const onClickOperator = (op) => {
+    if (numOne){
+        operator = op;
+        $operator.value = op;
+    } 
     else{
-        numTwo += number;
+        alert('숫자를 먼저 입력하세요!');
     }
-    $result.value += number;
 }
 
-document.querySelector('#num-0').addEventListener('click', onClickNumber('0'));
+document.querySelector('#plus').addEventListener('click',onClickOperator('+'));
 
 //문제 원인
--프로그램 작동 시 onClickNumber함수가 실행되어 계산기에 0이 나타나는 문제
+-프로그램 작동 시 onClickOperator함수가 실행되어 에러 발생
 
-const onClickNumber = (number) => {
+const onClickOperator = (op) => {
     return () => {
-        if (!operator){
-            numOne += number;
-        }
+        if (numOne){
+            operator = op;
+            $operator.value = op;
+        } 
         else{
-            numTwo += number;
+            alert('숫자를 먼저 입력하세요!');
         }
-        $result.value += number;
     }
 }
 //문제해결
-return () => {} 사용하여 실행 대기상태인 함수로 만들어 해결해 줌.
+함수의 반환값을 함수로 만들어 반환하여 에러 해결
 ```
