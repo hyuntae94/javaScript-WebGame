@@ -6,7 +6,7 @@
 
 <img src='../images/calculator_play.gif' alt='계산기실행'>
 
-### 2) 에러
+### 2) 예외 발생
 
 <img src='../images/calculator_error.gif' alt='계산기실행'>
 

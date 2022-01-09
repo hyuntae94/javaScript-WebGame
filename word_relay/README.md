@@ -7,7 +7,7 @@
 
 <img width="600" src='../images/word_play.gif'>
 
-### 2) 경고창
+### 2) 예외발생
 
 <img src="../images/word_play_alert.gif">
 
