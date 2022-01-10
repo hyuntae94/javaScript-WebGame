@@ -24,6 +24,17 @@
 4. 예시는 절차를 검증하는데 사용한다.
 - 순서도를 만들 때 **사용자의 이벤트(버튼 클릭, 입력창 글자 입력 등)가 필요한 곳에서 순서도를 끊어야 함**
 
+## 💡 커밋 로그 규칙
+`feat:__` **기능추가**
+
+`fix:__` **수정**
+
+`add:__` **파일추가**
+
+`refactor:__`**코드 리팩토링**
+
+`chore:__`**기타**
+
 **참고** [우아한테크코스](https://github.com/woowacourse/javascript-racingcar-precourse#%EA%B3%B5%ED%86%B5-%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD)
 
 
