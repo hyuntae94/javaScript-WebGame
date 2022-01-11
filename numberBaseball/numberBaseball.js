@@ -2,7 +2,8 @@ const $form = document.querySelector('#form');
 const $input = document.querySelector('#input');
 const $logs = document.querySelector('#logs');
 
-const numbers = [1,2,3,4,5,6,7,8,9];
+const totalTryChance = 10;//시도가능한 총 횟수
+const numbers = [1,2,3,4,5,6,7,8,9];//컴퓨터가 뽑을 수 있는 숫자를 담고있는 배열
 const answer = [];//무작위 4개 숫자 저장
 const tries = [];//현재까지의 모든 입력값 저장
 
@@ -39,7 +40,8 @@ const strikeBall = (value) =>{
             }
         }
     }
-    $logs.append(`${value} : ${strike}스트라이트 ${ball}볼`,document.createElement('br'));
+    $logs.append(`${value} : ${strike} 스트라이트 ${ball} 볼`, document.createElement('br'),
+                    ` 남은 기회: ${totalTryChance-tries.length}`,document.createElement('br'));
 }
 
 $form.addEventListener('submit',(event)=>{
@@ -56,7 +58,7 @@ $form.addEventListener('submit',(event)=>{
         return ;
     }
 
-    if (tries.length >= 10){
+    if (tries.length >= totalTryChance){
         const message = document.createTextNode(`패배! 정답은 ${answer.join('')}`);
         $logs.appendChild(message);
         return ;
