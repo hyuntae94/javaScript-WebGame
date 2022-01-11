@@ -1,6 +1,13 @@
 <h1 align='middle'>숫자야구게임</h1>
 
+## 👨🏻‍💻프로그램 실행결과 ##
 
+### 1) 정상작동
+
+<img src='../images/numberBaseball_play.gif'/>
+
+### 2) alert표시
+<img src="../images/numberBaseball_alert.gif">
 
 ## 순서도
 ```js

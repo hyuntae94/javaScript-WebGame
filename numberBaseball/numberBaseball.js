@@ -2,7 +2,7 @@ const $form = document.querySelector('#form');
 const $input = document.querySelector('#input');
 const $logs = document.querySelector('#logs');
 
-const totalTryChance = 10;//시도가능한 총 횟수
+const totalTryChance = 3;//시도가능한 총 횟수
 const numbers = [1,2,3,4,5,6,7,8,9];//컴퓨터가 뽑을 수 있는 숫자를 담고있는 배열
 const answer = [];//무작위 4개 숫자 저장
 const tries = [];//현재까지의 모든 입력값 저장
@@ -21,6 +21,7 @@ const defeated = () => {
     const message = document.createTextNode(`실패! 정답은 ${answer.join('')}`);
     $logs.appendChild(message);
 }
+
 //입력받은 숫자가 적합한지 확인
 const checkInput = (input) => {
     if (input.length !==4 || new Set(input).size !==4){
