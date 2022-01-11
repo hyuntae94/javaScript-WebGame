@@ -29,17 +29,20 @@ const strikeBall = (value) =>{
     let strike = 0;
     let ball   = 0;
 
-    for (let i=0; i<4; i++){
-        const index = value.indexOf(answer[i]);
+    answer.forEach((number, aIndex) => {
+        const index = value.indexOf(String(number));
+        
         if (index !== -1){
-            if (index === i){
+            if (index === aIndex){
                 strike += 1;
             }
             else {
                 ball += 1;
             }
         }
-    }
+    })
+
+
     $logs.append(`${value} : ${strike} 스트라이트 ${ball} 볼`, document.createElement('br'),
                     ` 남은 기회: ${totalTryChance-tries.length}`,document.createElement('br'));
 }
