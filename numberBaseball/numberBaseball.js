@@ -15,7 +15,12 @@ for (let i=0; i<4; i++){
     answer.push(numbers[index]);
     numbers.splice(index,1);
 }
-console.log(answer);
+
+//실패했을 경우 출력문
+const defeated = () => {
+    const message = document.createTextNode(`실패! 정답은 ${answer.join('')}`);
+    $logs.appendChild(message);
+}
 //입력받은 숫자가 적합한지 확인
 const checkInput = (input) => {
     if (input.length !==4 || new Set(input).size !==4){
@@ -74,8 +79,7 @@ $form.addEventListener('submit',(event)=>{
     }
 
     if (tries.length >= totalTryChance){//10번 시도할때까지 못 맞추는 경우
-        const message = document.createTextNode(`패배! 정답은 ${answer.join('')}`);
-        $logs.appendChild(message);
+        defeated();
         return ;
     }
 
@@ -83,7 +87,7 @@ $form.addEventListener('submit',(event)=>{
     strikeBall(value);
     //3아웃이면 게임 종료
     if (outCount === 3){
-        $logs.append(`패배! 정답은 ${answer.join('')}`);
+        defeated();
         return ;
     }
 })
