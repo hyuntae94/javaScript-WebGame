@@ -18,6 +18,10 @@ const drawBall = (number, $parent) =>{
     const $ball = document.createElement('div');
     $ball.className = 'ball';
     $ball.textContent = number;
+    if (number < 10) $ball.style.backgroundColor='red';
+    else if (number < 20) $ball.style.backgroundColor='orange';
+    else if (number < 30) $ball.style.backgroundColor='yellow';
+    else if (number < 40) $ball.style.backgroundColor='green';
     $parent.appendChild($ball);
 }
 
