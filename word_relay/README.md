@@ -5,9 +5,9 @@
 
 ### 1) 참가자릴레이
 
-<img width="600" src='../images/word_play.gif'>
+<img src='../images/word_play.gif'>
 
-### 2) 예외발생
+### 2) alert표시
 
 <img src="../images/word_play_alert.gif">
 

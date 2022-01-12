@@ -6,7 +6,7 @@
 
 <img src='../images/calculator_play.gif' alt='계산기실행'>
 
-### 2) 예외 발생
+### 2) alert표시
 
 <img src='../images/calculator_error.gif' alt='계산기실행'>
 
