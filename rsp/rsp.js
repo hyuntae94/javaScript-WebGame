@@ -33,14 +33,40 @@ const changeComputerHand = () => {
 }
 
 let intervalId = setInterval(changeComputerHand, 50);
+const scoreTable = {
+    'scissors' : 1,
+    'rock' : 0,
+    'paper' : -1,
+};
+
 
 //버튼을 누른 도중에 다시 버튼을 입력할 경우에 발생하는 에러처리
 let clickFlag = true;
-const clickButton = () =>{
+let score = 0;
+let message = "";
+
+const clickButton = (event) =>{
     if (clickFlag){
         clickFlag = false;
         clearInterval(intervalId);
+        const myChoice = event.target.textContent === '가위' ?
+            'scissors' : event.target.textContent === '바위' ?
+            'rock' : 'paper';
         //점수 계산 및 화면 표시
+        const scoreDiff = scoreTable[myChoice] - scoreTable[computerChoice];
+        if ([2,-1].includes(scoreDiff)){//승리
+            score += 1;
+            message = '승리';
+        } 
+        else if ([1,-2].includes(scoreDiff)){//패배
+            score -= 1;
+            message = '패배';
+        }
+        else {//무승부
+            message = '무승부';
+        }
+        $score.textContent = `${message}, 총: ${score}점!`;
+
         setTimeout( () =>{
             clickFlag = true;
             intervalId = setInterval(changeComputerHand, 50);
@@ -51,4 +77,5 @@ const clickButton = () =>{
 $rock.addEventListener('click', clickButton);
 $scissors.addEventListener('click', clickButton);
 $paper.addEventListener('click', clickButton);
+
 
