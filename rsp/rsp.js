@@ -42,8 +42,9 @@ const scoreTable = {
 
 //버튼을 누른 도중에 다시 버튼을 입력할 경우에 발생하는 에러처리
 let clickFlag = true;
-let score = 0;
 let message = "";
+let playerWin = 0;//내점수
+let computerWin = 0;//컴퓨터 점수
 
 const clickButton = (event) =>{
     if (clickFlag){
@@ -55,22 +56,31 @@ const clickButton = (event) =>{
         //점수 계산 및 화면 표시
         const scoreDiff = scoreTable[myChoice] - scoreTable[computerChoice];
         if ([2,-1].includes(scoreDiff)){//승리
-            score += 1;
             message = '승리';
+            playerWin += 1;
         } 
         else if ([1,-2].includes(scoreDiff)){//패배
-            score -= 1;
             message = '패배';
+            computerWin += 1;
         }
         else {//무승부
             message = '무승부';
         }
-        $score.textContent = `${message}, 총: ${score}점!`;
-
-        setTimeout( () =>{
-            clickFlag = true;
-            intervalId = setInterval(changeComputerHand, 50);
-        }, 1000);
+        //5판 3선승제
+        if (playerWin === 3){
+            $score.textContent = `Winner -> player ${playerWin} : computer ${computerWin}`;
+        }
+        else if (computerWin === 3){
+            $score.textContent = `player ${playerWin} : Winner -> computer${computerWin}`;
+        }
+        else {
+            $score.textContent = `${message}! player ${playerWin} : computer ${computerWin}`;
+            setTimeout( () =>{
+                clickFlag = true;
+                intervalId = setInterval(changeComputerHand, 50);
+            }, 1000);
+        }
+        
     };
 };
 
