@@ -32,4 +32,23 @@ const changeComputerHand = () => {
     $computer.style.backgroundSize = 'auto 200px';
 }
 
-setInterval(changeComputerHand, 50);
+let intervalId = setInterval(changeComputerHand, 50);
+
+//버튼을 누른 도중에 다시 버튼을 입력할 경우에 발생하는 에러처리
+let clickFlag = true;
+const clickButton = () =>{
+    if (clickFlag){
+        clickFlag = false;
+        clearInterval(intervalId);
+        //점수 계산 및 화면 표시
+        setTimeout( () =>{
+            clickFlag = true;
+            intervalId = setInterval(changeComputerHand, 50);
+        }, 1000);
+    };
+};
+
+$rock.addEventListener('click', clickButton);
+$scissors.addEventListener('click', clickButton);
+$paper.addEventListener('click', clickButton);
+
