@@ -1,8 +1,11 @@
 const $screen = document.querySelector('#screen');
 const $result = document.querySelector('#result');
 
+const records = [];
+
 let startTime = 0;
 let endTime = 0;
+
 
 $screen.addEventListener('click', ()=>{
     if ($screen.classList.contains('waiting')){
@@ -23,8 +26,13 @@ $screen.addEventListener('click', ()=>{
     else if ($screen.classList.contains('now')){
         //클릭화면
         endTime = new Date();
-        $result.textContent = `${endTime-startTime}ms`;
+        const timeGap = endTime - startTime;
+        records.push(timeGap);
+        const average = records.reduce((a,b)=>a+b)/records.length;
+        $result.textContent = `현재 : ${timeGap}ms, 평균 : ${Math.round(average)}ms`;
         $screen.classList.replace('now','waiting');
         $screen.textContent = '클릭해서 시작하세요';
+        // startTime = 0;
+        // endTime = 0;    
     }
 })
