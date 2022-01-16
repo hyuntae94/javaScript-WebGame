@@ -32,11 +32,17 @@ $screen.addEventListener('click', ()=>{
         endTime = new Date();
         const timeGap = endTime - startTime;
         records.push(timeGap);
+
         const average = records.reduce((a,b)=>a+b)/records.length;
-        console.log(timeGap,records);
         $result.textContent = `현재 : ${timeGap}ms, 평균 : ${Math.round(average)}ms`;
         $screen.classList.replace('now','waiting');
         $screen.textContent = '클릭해서 시작하세요';
+        
+        const topFive = records.sort((a,b)=>a-b).slice(0,5);
+        topFive.forEach((v,i)=>{
+            $result.append(document.createElement('br'),
+            `${i+1}위 : ${v}ms`);   
+        })
         // startTime = 0;
         // endTime = 0;    
     }
