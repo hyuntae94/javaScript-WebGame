@@ -1,6 +1,10 @@
 const {body} = document;
 const $table = document.createElement('table');
 const $result = document.createElement('div'); //결과창
+const $resetButton = document.createElement('button'); //리셋버튼
+
+$resetButton.innerText = '다시하기'
+
 const rows = [];
 
 let turn = 'O';
@@ -48,15 +52,17 @@ const checkWinnerAndDrawHandle = (target) => {
     const hasWinner = checkWinnerHandler(target);
 
     if (hasWinner){//승자가 있다면
-        $result.textContent = turn === 'O' ? '플레이어의 승리' : '컴퓨터의 승리';
+        $result.innerText = turn === 'O' ? '플레이어의 승리' : '컴퓨터의 승리';
         $table.removeEventListener('click',tableClickHandler);
+        $result.append(document.createElement('br'),$resetButton);
         return ;
     }
     //승자가 없다면
     //무승부인지 확인
     const draw = rows.flat().every((cell)=>cell.textContent);
     if (draw){
-        $result.textContent = '무승부';
+        $result.innerText = '무승부';
+        $result.append(document.createElement('br'),$resetButton);
         return ;
     }
     //승자도 없고 무승부가 아니라면 현재 게임진행중
@@ -100,3 +106,7 @@ for (let i=0; i<3; i++){
 
 body.appendChild($table);
 body.appendChild($result);
+
+$resetButton.addEventListener('click', ()=> {
+    window.location.reload();
+})
