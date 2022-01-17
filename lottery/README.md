@@ -9,7 +9,7 @@
 
 ## 👨🏻‍💻 프로그램 실행결과 ##
 
-<img src="../images/lottery_play.gif"/>
+<img src="../images/lottery_play.gif" alt="실행결과"/>
 
 ---
 ## 순서도
