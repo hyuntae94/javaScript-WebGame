@@ -1,5 +1,10 @@
 <h1 align='middle'> 🤖 틱택토 게임</h1>
 
+## 👨🏻‍💻 실행결과
+
+<img src="../images/tictaktoe_play.gif" alt="실행결과">
+
+
 ## 🚦 순서도
 ```js
 1. 오목판 2차원 배열을 만든다.
