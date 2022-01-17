@@ -44,18 +44,11 @@ const checkWinnerHandler = (target) => {
     return (hasWinner);
 }
 
+const checkWinnerAndDrawHandle = (target) => {
+    const hasWinner = checkWinnerHandler(target);
 
-const tableClickHandler = (event) =>{
-    if (event.target.textContent !== ""){//칸이 채워져 있다면
-        alert('빈칸이 아닙니다!!');
-        return ;
-    }
-    //빈칸이라면
-    event.target.textContent = turn;    
-
-    const hasWinner = checkWinnerHandler(event.target);
     if (hasWinner){//승자가 있다면
-        $result.textContent = `${turn}님이 승리!`;
+        $result.textContent = turn === 'O' ? '플레이어의 승리' : '컴퓨터의 승리';
         $table.removeEventListener('click',tableClickHandler);
         return ;
     }
@@ -68,6 +61,27 @@ const tableClickHandler = (event) =>{
     }
     //승자도 없고 무승부가 아니라면 현재 게임진행중
     turn = turn === 'O' ? 'X' : 'O';
+}
+
+
+const tableClickHandler = (event) => {
+    if (event.target.textContent !== ""){//칸이 채워져 있다면
+        alert('빈칸이 아닙니다!!');
+        return ;
+    }
+    //빈칸이라면
+    event.target.textContent = turn;    
+
+    checkWinnerAndDrawHandle(event.target);
+
+    //내가 선택하고 승무패 확인하고 컴퓨터가 선택하고 승무패 확인하고 반복
+    if (turn === 'X'){
+        const emptyCell = rows.flat().filter(v => !v.textContent);
+        const randomCell = emptyCell[Math.floor(Math.random()*emptyCell.length)];
+        randomCell.textContent = 'X';
+
+        checkWinnerAndDrawHandle(randomCell);
+    }
 }
 
 
