@@ -42,3 +42,19 @@ $startScreen.addEventListener('submit',(event)=>{
     $heroAtt.textContent = `ATT: ${hero.att}`;
     hero.name = name;
 });
+
+$gameMenu.addEventListener('submit',(event)=>{
+    event.preventDefault();
+    const input = event.target['menu-input'].value;
+    if (input === '1'){
+        $gameMenu.style.display ='none';
+        $battleMenu.style.display ='block';
+        monster = JSON.parse(
+            JSON.stringify(monsterList[Math.floor(Math.random()*monsterList.length)])
+        );
+        monster.maxHp = monster.hp;
+        $monsterName.textContent = monster.name;
+        $monsterHp.textContent = `HP: ${monster.hp}/${monster.maxHp}`;
+        $monsterAtt.textContent = `ATT: ${monster.att}`;    
+    }
+})
