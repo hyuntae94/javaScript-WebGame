@@ -14,6 +14,20 @@ const $monsterAtt = document.querySelector('#monster-att');
 //message
 const $message = document.querySelector('#message');
 
+class Unit{
+    constructor(game,name,hp,att,xp){
+        this.game = game;
+        this.name = name;
+        this.hp = hp;
+        this.att = att;
+        this.xp =xp;
+        this.maxHp = hp;
+    }
+    attack(target){
+        target.hp -= this.att;
+    }
+}
+
 class Game{
     constructor(name){
         this.monster = null;
@@ -146,18 +160,13 @@ class Game{
     }
 }
 
-class Hero{
+class Hero extends Unit{
     constructor(game,name){
-        this.game = game;
-        this.name = name;
-        this.lev = 1;
-        this.maxHp = 100;
-        this.hp = 100;
-        this.xp = 0;
-        this.att = 10;
+        super(game,name,100,10,0);
+        this.lev=1;
     }
     attack(target){
-        target.hp -= this.att;
+        super.attack(target);
     }
     heal(monster){
         this.hp += 20;
@@ -176,17 +185,12 @@ class Hero{
     }
 }
 
-class Monster{
+class Monster extends Unit{
     constructor(game,name,hp,att,xp){
-        this.game = game;
-        this.name = name;
-        this.maxHp = hp;
-        this.hp = hp;
-        this.att = att;
-        this.xp = xp;
+        super(game,name,hp,att,xp);
     }
     attack(target){
-        target.hp -= this.att;
+        super.attack(target);
     }
 }
 
