@@ -1,5 +1,11 @@
 <h1 align='middle'>RPG게임</h1>
 
+## [게임참가](https://distracted-bardeen-6314ae.netlify.app)
+
+## 👨🏻‍💻실행결과
+
+<img src="../images/rpg_play.gif">
+
 ## 🔎 ISSUE
 
 ```js
