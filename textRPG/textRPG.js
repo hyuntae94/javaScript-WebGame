@@ -32,7 +32,6 @@ class Game{
         this.hero = new Hero(this, name);
         this.updateHeroStat();
     }
-    
     changeScreen(screen){
         if (screen === 'start'){
             $startScreen.style.display = 'block';
@@ -81,7 +80,19 @@ class Game{
             const {hero, monster} = this;
             hero.attack(monster);
             monster.attack(hero);
-            this.showMessage(`${hero.att}의 데미지를 주고, ${monster.att}의 데미지를 받았다!`);
+            if (hero.hp <= 0){
+                this.showMessage(`${hero.lev}레벨에서 전사. 새 주인공을 생성하세요`);
+                this.quit();
+            }
+            else if (monster.hp <= 0){
+                this.showMessage(`몬스터를 잡아 ${monster.xp}경험치를 얻었다`);
+                hero.getXp(monster.xp);
+                this.monster = null;
+                this.changeScreen('game');
+            }
+            else {
+                this.showMessage(`${hero.att}의 데미지를 주고, ${monster.att}의 데미지를 받았다!`);
+            }
             this.updateHeroStat();
             this.updateMonsterStat();
         }
@@ -123,6 +134,16 @@ class Game{
     showMessage(text){
         $message.textContent = text;
     }
+    quit(){
+        this.hero = null;
+        this.monster = null;
+        this.updateHeroStat();
+        this.updateMonsterStat();
+        $gameMenu.removeEventListener('submit',this.onGameMenuInput);
+        $battleMenu.removeEventListener('submit',this.onBattleMenuInput);
+        this.changeScreen('start');
+        game = null;
+    }
 }
 
 class Hero{
@@ -141,6 +162,17 @@ class Hero{
     heal(monster){
         this.hp += 20;
         this.hp -= monster.att;
+    }
+    getXp(xp){
+        this.xp += xp;
+        if (this.xp >= this.lev * 15){
+            this.xp -= this.lev * 15;
+            this.lev += 1;
+            this.maxHp += 5;
+            this.att += 5;
+            this.hp = this.maxHp;
+            this.game.showMessage(`레벨업! 레벨${this.lev}`);
+        }
     }
 }
 
@@ -164,79 +196,3 @@ $startScreen.addEventListener('submit', (event)=>{
     const name = event.target['name-input'].value;
     game = new Game(name);
 })
-
-
-
-
-
-
-
-
-
-
-
-// const hero = {
-//     name : '',
-//     lev : 1,
-//     maxHp: 100,
-//     hp: 100,
-//     xp: 0,
-//     att: 10,
-//     attack(monster){
-//         monster.hp -= this.att;
-//         this.hp -= monster.att;    
-//     },
-//     heal(monster){
-//         this.hp += 20;
-//         this.hp -= monster.att;
-//     },    
-// };
-
-// let monster = null;
-// const monsterList = [
-//     {name:'슬라임',hp:25,att:10,xp:10},
-//     {name:'스켈레톤',hp:50,att:15,xp:20},
-//     {name:'마왕',hp:150,att:35,xp:50},
-// ];
-
-
-// $startScreen.addEventListener('submit',(event)=>{
-//     event.preventDefault();
-//     const name = event.target['name-input'].value;
-//     $startScreen.style.display = 'none';
-//     $gameMenu.style.display ='block';
-//     $heroName.textContent = name;
-//     $heroLevel.textContent = `${hero.lev}Lv`;
-//     $heroHp.textContent = `HP: ${hero.hp}/${hero.maxHp}`;
-//     $heroXp.textContent = `XP: ${hero.xp}/${hero.lev*15}`;
-//     $heroAtt.textContent = `ATT: ${hero.att}`;
-//     hero.name = name;
-// });
-
-// $gameMenu.addEventListener('submit',(event)=>{
-//     event.preventDefault();
-//     const input = event.target['menu-input'].value;
-//     if (input === '1'){
-//         $gameMenu.style.display ='none';
-//         $battleMenu.style.display ='block';
-//         monster = JSON.parse(
-//             JSON.stringify(monsterList[Math.floor(Math.random()*monsterList.length)])
-//         );
-//         monster.maxHp = monster.hp;
-//         $monsterName.textContent = monster.name;
-//         $monsterHp.textContent = `HP: ${monster.hp}/${monster.maxHp}`;
-//         $monsterAtt.textContent = `ATT: ${monster.att}`;    
-//     }
-// });
-
-// $battleMenu.addEventListener('submit', (event)=>{
-//     event.preventDefault();
-//     const input = event.target['battle-input'].value;
-//     if (input === '1'){
-//         hero.attack(monster);
-//         monster.attack(hero);
-//         $heroHp.textContent = `${hero.hp}/${hero.maxHp}`;
-//         $monsterHp.textContent = `${monster.hp}/${monster.maxHp}`;
-//         $message.textContent = `${hero.att}의 데미지를 주고 ${monster.att}의 `
-//     }
-// })
