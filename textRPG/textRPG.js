@@ -23,6 +23,105 @@ class Game{
             {name:'스켈레톤',hp:50,att:15,xp:20},
             {name:'마왕',hp:150,att:35,xp:50},
         ];
+        this.start(name);
+    }
+    start(name){
+        $gameMenu.addEventListener('submit',this.onGameMenuInput);
+        $battleMenu.addEventListener('submit',this.onBattleMenuInput);
+        this.changeScreen('game');
+        this.hero = new Hero(this, name);
+        this.updateHeroStat();
+    }
+    
+    changeScreen(screen){
+        if (screen === 'start'){
+            $startScreen.style.display = 'block';
+            $gameMenu.style.display = 'none';
+            $battleMenu.style.display = 'none';
+        }
+        else if (screen === 'game'){
+            $startScreen.style.display = 'none';
+            $gameMenu.style.display = 'block';
+            $battleMenu.style.display = 'none';
+        }
+        else if (screen === 'battle'){
+            $startScreen.style.display = 'none';
+            $gameMenu.style.display = 'none';
+            $battleMenu.style.display = 'block';
+        }
+    }
+    onGameMenuInput = (event) => {
+        event.preventDefault();
+        const input = event.target['menu-input'].value;
+        if (input === '1'){//모험
+            this.changeScreen('battle');
+            const randomIndex = Math.floor(Math.random() * this.monsterList.length);
+            const randomMonster = this.monsterList[randomIndex];
+            this.monster = new Monster(
+                this,
+                randomMonster.name,
+                randomMonster.hp,
+                randomMonster.att,
+                randomMonster.xp
+            );
+            this.updateMonsterStat();
+            this.showMessage(`몬스터와 마주쳤다.${this.monster.name}인 것같다!`);
+        }
+        else if (input === '2'){
+            //휴식
+        }
+        else if (input === '3'){
+            //종료
+        }
+    }
+    onBattleMenuInput = (event) => {
+        event.preventDefault();
+        const input = event.target['battle-input'].value;
+        if (input === '1'){
+            const {hero, monster} = this;
+            hero.attack(monster);
+            monster.attack(hero);
+            this.showMessage(`${hero.att}의 데미지를 주고, ${monster.att}의 데미지를 받았다!`);
+            this.updateHeroStat();
+            this.updateMonsterStat();
+        }
+        else if (input === '2'){
+            //회복
+        }
+        else if (input === '3'){
+            //도망
+        }
+    }
+    updateHeroStat() {
+        const {hero} = this;
+        if (hero === null){ //캐릭터가 죽은 경우
+            $heroName.textContent = '';
+            $heroLevel.textContent = '';
+            $heroHp.textContent = '';
+            $heroAtt.textContent = '';
+            $heroXp.textContent = '';
+            return ;
+        }
+        $heroName.textContent = hero.name;
+        $heroLevel.textContent = `${hero.lev}Lv`;
+        $heroHp.textContent = `HP: ${hero.hp}/${hero.maxHp}`;
+        $heroAtt.textContent = `XP: ${hero.xp}/${15*hero.lev}`;
+        $heroXp.textContent = `ATT: ${hero.att}`;
+    }
+    updateMonsterStat(){
+        const {monster} = this;
+        if (monster === null){
+            $monsterName.textContent = '';
+            $monsterAtt.textContent = '';
+            $monsterHp.textContent = '';
+            return ;
+        }
+        $monsterName.textContent = monster.name;
+        $monsterHp.textContent = `HP: ${monster.hp}/${monster.maxHp}`;
+        $monsterAtt.textContent = `ATT: ${monster.att}`;
+    }
+    showMessage(text){
+        $message.textContent = text;
     }
 }
 
@@ -50,6 +149,7 @@ class Monster{
         this.game = game;
         this.name = name;
         this.maxHp = hp;
+        this.hp = hp;
         this.att = att;
         this.xp = xp;
     }
