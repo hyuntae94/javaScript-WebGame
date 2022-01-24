@@ -34,6 +34,17 @@ const startGame = () => {
         const card = createCard(i);
         $wrapper.appendChild(card);
     }
+    document.querySelectorAll('.card').forEach((card,index)=>{
+        setTimeout(()=>{
+            card.classList.add('flipped')
+        },1000+100*index);
+    })
+
+    setTimeout(()=>{
+        document.querySelectorAll('.card').forEach((card,index)=>{
+            card.classList.remove('flipped');
+        })
+    },5000)
 }
 
 startGame();
