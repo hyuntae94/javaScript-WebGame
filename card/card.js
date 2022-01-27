@@ -6,6 +6,7 @@ let colorCopy = colors.concat(colors);
 let shuffled = [];
 let clicked = [];
 let completed = [];
+let clickable = false;
 
 const shuffle = () => {//무작위 카드 섞기
     while(colorCopy.length > 0){
@@ -31,6 +32,10 @@ const createCard = (idx) => {
 }
 
 function onClickCard(){
+    if (!clickable || completed.includes(this) || clicked[0] === this){
+        return ;
+    }
+
     this.classList.toggle('flipped');
     clicked.push(this);
     if (clicked.length !==2) return ;
@@ -38,7 +43,8 @@ function onClickCard(){
     const secondBackColor = clicked[1].querySelector('.card-back').style.backgroundColor
 
     if (firstBackColor === secondBackColor){//카드가 같은 경우
-        clicked.map(el => completed.push(el));
+        completed.push(clicked[0]);
+        completed.push(clicked[1]);
         clicked = [];
         if (completed.length !== total){
             return ;
@@ -51,10 +57,13 @@ function onClickCard(){
     }
 
     //카드가 서로다른 경우
+    clickable = false;
     setTimeout(()=>{
-        clicked.map(el => el.classList.remove('flipped'));
+        clicked[0].classList.remove('flipped');
+        clicked[1].classList.remove('flipped');
         clicked = [];
-    },800);
+        clickable = true;
+    },500);
 }
 
 const startGame = () => {
@@ -64,6 +73,7 @@ const startGame = () => {
         card.addEventListener('click',onClickCard);
         $wrapper.appendChild(card);
     }
+    
     document.querySelectorAll('.card').forEach((card,index)=>{
         setTimeout(()=>{
             card.classList.add('flipped')
@@ -74,6 +84,7 @@ const startGame = () => {
         document.querySelectorAll('.card').forEach((card,index)=>{
             card.classList.remove('flipped');
         })
+        clickable = true;
     },5000)
 }
 
@@ -82,6 +93,7 @@ function resetGame(){
     colorCopy = colors.concat(colors);
     shuffled = [];
     completed = [];
+    clickable = false;
     startGame();
 }
 
