@@ -1,0 +1,1 @@
+<h1 align='middle'>공룡 게임</h1>
