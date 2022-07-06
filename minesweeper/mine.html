@@ -25,6 +25,59 @@
     <script>
         const $tbody = document.querySelector('#table tbody');
         const $result = document.querySelector('#result');
+
+        const row = 10;
+        const cell = 10;
+        const mine = 10;
+        const CODE = {
+            NORMAL : -1,
+            QUESTION : -2,
+            FLAG : -3,
+            QUESTION_MINE: -4,
+            FLAG_MINE: -5,
+            MINE: -6,
+            OPENED: 0, // 0 이상이면 모두 열린 칸
+        }
+
+
+        let data;
+
+        function plantMine(){
+            const candidata = new Array(row*cell).fill().map((arr,i)=>{
+                return i;
+            });
+            const shuffle = [];
+            while (candidata.length > row*cell - mine){
+                const [chosen] = candidata.splice(Math.floor(Math.random()*candidata.length),1);
+                shuffle.push(chosen);
+            }//무작위로 10개 선택
+            
+            const data = Array.from({length : row}, () => new Array(cell).fill(-1));
+        
+            for (let k=0; k < shuffle.length; k++){
+                const ver = Math.floor(shuffle[k] / cell);
+                const hor = shuffle[k] % cell;
+                data[ver][hor] = CODE.MINE;
+            }
+            return data;
+        }
+
+
+        function drawTable(){
+            data = plantMine();
+            data.forEach(row => {
+                const $tr = document.createElement('tr');
+                row.forEach(col => {
+                    const $td = document.createElement('td');
+                    if (col === CODE.MINE)
+                        $td.textContent = 'X';
+                    $tr.append($td);
+                })
+                $tbody.append($tr);
+            })
+        }
+
+        drawTable()
     </script>
 </body>
 </html>
