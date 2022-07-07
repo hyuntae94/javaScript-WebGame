@@ -22,19 +22,26 @@
     </style>
 </head>
 <body>
+    <form id="form">
+        <input placeholder="가로 줄" id="row" size="5" />
+        <input placeholder="세로 줄" id="cell" size="5" />
+        <input placeholder="지뢰" id="mine" size="5" />
+      <button>생성</button>
+    </form>
     <div id="timer">0초</div>
     <table id="table">
         <tbody></tbody>
     </table>
     <div id="result"></div>
     <script>
+        const $form = document.querySelector('#form');
         const $timer = document.querySelector('#timer');
         const $tbody = document.querySelector('#table tbody');
         const $result = document.querySelector('#result');
 
-        const row = 10;
-        const cell = 10;
-        const mine = 10;
+        let row;
+        let cell;
+        let mine;
         const CODE = {
             NORMAL : -1,
             QUESTION : -2,
@@ -45,14 +52,26 @@
             OPENED: 0, // 0 이상이면 모두 열린 칸
         }
 
-
         let data;
         let openCount = 0;
-        let startTime = new Date();
-        const interval = setInterval(()=>{
-            const time = new Date() - startTime;
-            $timer.textContent = `${Math.floor(time/1000)}초 경과`
-        },1000)
+        function onSubmit(event) {
+            event.preventDefault();
+
+            row = parseInt(event.target.row.value);
+            cell = parseInt(event.target.cell.value);
+            mine = parseInt(event.target.mine.value);
+
+            drawTable();
+
+            startTime = new Date();
+            interval = setInterval(() => {
+            const time = Math.floor((new Date() - startTime) / 1000);
+            $timer.textContent = `${time}초`;
+            }, 1000);
+
+        }
+        $form.addEventListener('submit', onSubmit);
+
         function plantMine(){
             const candidata = new Array(row*cell).fill().map((arr,i)=>{
                 return i;
@@ -94,7 +113,7 @@
                 case CODE.FLAG_MINE:
                     data[rowIndex][cellIndex] = CODE.MINE;
                     target.className = '';
-                    target.textContent = 'X';
+                    target.textContent = '';
                     break;
                 case CODE.NORMAL:
                     data[rowIndex][cellIndex] = CODE.QUESTION;
@@ -174,7 +193,7 @@
             }
             },0)
         }
-        
+
         function onLeftClick(event) {
             const target = event.target; 
             const rowIndex = target.parentNode.rowIndex;
@@ -184,7 +203,8 @@
             if (cellData === CODE.NORMAL) { // 닫힌 칸이면
                 openAround(rowIndex, cellIndex);
             } 
-            else if (cellData ===   CODE.MINE) { // 지뢰 칸이면
+            else if (cellData ===   CODE.MINE) {
+                showMines(); // 지뢰 칸이면
                 target.textContent = '펑';
                 target.className = 'opened';
 
@@ -194,6 +214,16 @@
                 $tbody.removeEventListener('click', onLeftClick);
             } // 나머지는 무시
         }
+        function showMines() {
+            const mines = [CODE.MINE, CODE.QUESTION_MINE, CODE.FLAG_MINE];
+            data.forEach((row, rowIndex) => {
+                row.forEach((cell, cellIndex) => {
+                if (mines.includes(cell)) {
+                    $tbody.children[rowIndex].children[cellIndex].textContent = 'X';
+                }
+                });
+            });
+        }
         function drawTable(){
             data = plantMine();
             data.forEach(row => {
@@ -201,7 +231,7 @@
                 row.forEach(col => {
                     const $td = document.createElement('td');
                     if (col === CODE.MINE)
-                        $td.textContent = 'X';
+                        $td.textContent = '';
                     $tr.append($td);
                 })
                 $tbody.append($tr);
@@ -209,7 +239,6 @@
                 $tbody.addEventListener('click', onLeftClick);
             })
         }
-        drawTable()
     </script>
 </body>
 </html>
