@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>지뢰찾기</title>
     <style>
-        table { border-collapse : collapse}
+        table { 
+            border-collapse : collapse;
+            width: 500px;
+            height: 500px;
+        }
         td {
             border: 1px solid #bbb;
             text-align: center;
@@ -62,6 +66,46 @@
             return data;
         }
 
+        function onRightClick(e){
+            e.preventDefault();
+            const target = e.target;
+            const rowIndex = target.parentNode.rowIndex;
+            const cellIndex = target.cellIndex;
+            const cellData = data[rowIndex][cellIndex];
+            //지뢰면->물음표지뢰
+            switch (cellData) {
+                case CODE.MINE:
+                    data[rowIndex][cellIndex] = CODE.QUESTION_MINE;
+                    target.className = 'question';
+                    target.textContent = '?';
+                    break;
+                case CODE.QUESTION_MINE:
+                    data[rowIndex][cellIndex] = CODE.FLAG_MINE;
+                    target.className = 'flag';
+                    target.textContent = '!';
+                    break;
+                case CODE.FLAG_MINE:
+                    data[rowIndex][cellIndex] = CODE.MINE;
+                    target.className = '';
+                    target.textContent = 'X';
+                    break;
+                case CODE.NORMAL:
+                    data[rowIndex][cellIndex] = CODE.QUESTION;
+                    target.className = 'question';
+                    target.textContent = '?';
+                    break;
+                case CODE.QUESTION:
+                    data[rowIndex][cellIndex] = CODE.FLAG;
+                    target.className = 'flag';
+                    target.textContent = '!';
+                    break;
+                case CODE.FLAG:
+                    data[rowIndex][cellIndex] = CODE.NORMAL;
+                    target.className = '';
+                    target.textContent = '';
+            }
+        }
+
 
         function drawTable(){
             data = plantMine();
@@ -74,6 +118,7 @@
                     $tr.append($td);
                 })
                 $tbody.append($tr);
+                $tbody.addEventListener('contextmenu', onRightClick);
             })
         }
 
