@@ -12,7 +12,6 @@
 - 변수 선언시 `var` 를 사용하지 않는다. `const` 와 `let` 을 사용한다.
   - [const](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements/const)
   - [let](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements/let)
-- **함수(또는 메소드)의 길이가 15라인을 넘어가지 않도록 구현**
 - 함수(또는 메소드)가 한 가지 일만 잘 하도록 구현
 - `기능단위`로 커밋하는 방식
 - 생성자 함수의 이름은 **대문자**로 표기
